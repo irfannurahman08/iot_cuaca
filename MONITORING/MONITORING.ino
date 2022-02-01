@@ -18,7 +18,7 @@ File myFile;
 Adafruit_BMP280 bmp; // I2C
 
 
-LiquidCrystal_I2C lcd(0x27, 16, 2); // GANTI 0x3F Ke 0x27 kalau LCD ga muncul
+LiquidCrystal_I2C lcd(0x27, 40, 4); // GANTI 0x3F Ke 0x27 kalau LCD ga muncul
 
 DHT dht(5, DHT11); //Pin, Jenis DHT
 
@@ -276,92 +276,100 @@ void loop() {
   Serial.println(hari);  
   Serial.println(bulan);  
   Serial.println(tahun); 
-  
+
+  //lcd ke 1
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("TGL: ");
-  lcd.setCursor(4, 0);
+  lcd.setCursor(5, 0);
   lcd.print(hari);
-  lcd.setCursor(7, 0);
+  lcd.setCursor(8, 0);
   lcd.print(bulan);
-  lcd.setCursor(10, 0);
+  lcd.setCursor(11, 0);
   lcd.print(tahun);
   
 
-  lcd.setCursor(0, 1);
+  lcd.setCursor(0, 2);
   lcd.print("Jam: ");
-  lcd.setCursor(5, 1);
+  lcd.setCursor(5, 2);
   lcd.print(jam);
-  lcd.setCursor(8, 1);
+  lcd.setCursor(8, 2);
   lcd.print(menit);
-  lcd.setCursor(11, 1);
+  lcd.setCursor(11, 2);
   lcd.print(detik);
+
   
   delay(5000); //waktu tunda 5 detik
-  
+  //lcd ke 2
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Cuaca : ");
-  lcd.setCursor(7, 0);
+  lcd.print("Cuaca  : ");
+  lcd.setCursor(8, 0);
   lcd.print(cuaca);
 
   lcd.setCursor(0,1);
-  lcd.print("Jumlah_tip : ");
-  lcd.setCursor(12,1);
+  lcd.print("Jmh tip: ");
+  lcd.setCursor(8,1);
   lcd.print(jumlah_tip);
 
-  delay(5000); //waktu tunda 5 detik
 
-  lcd.clear();
+  lcd.setCursor(0, 2);
+  lcd.print("Suhu   :");
+  lcd.setCursor(8, 2);
+  lcd.print(bmp.readTemperature());
+  lcd.setCursor(13, 2);
+  lcd.print((char)223);
+  lcd.setCursor(14, 2);
+  lcd.print("C");
+  
+  lcd.setCursor(0, 3);
+  lcd.print("K_Udara: ");
+  lcd.setCursor(8, 3);
+  lcd.print(kelembaban);
+  lcd.setCursor(14, 3);
+  lcd.print("RH");
+
+  delay(5000); //waktu tunda 5 detik
+  //lcd ke 3
+  lcd.clear(); 
   lcd.setCursor(0, 0);
-  lcd.print("K_Angin: ");
-  lcd.setCursor(9, 0);
+  lcd.print("kel_tanah:");
+  lcd.setCursor(10, 0);
+  lcd.print(kondisi_tanah);
+  lcd.setCursor(14, 0);
+  lcd.print("RH");
+  
+  lcd.setCursor(0, 1);
+  lcd.print("Kec_Angin: ");
+  lcd.setCursor(10, 1);
   lcd.print(velocity_ms);
-  lcd.setCursor(13, 0);
+  lcd.setCursor(13, 1);
   lcd.print("m/s");
   
-
-  lcd.setCursor(0, 1);
-  lcd.print("kel_tanah:");
-  lcd.setCursor(10, 1);
-  lcd.print(kondisi_tanah);
-  lcd.setCursor(14, 1);
-  lcd.print("RH");
-
-  delay(5000); //waktu tunda 5 detik
-  
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("kel_Udara: ");
-  lcd.setCursor(10, 0);
-  lcd.print(kelembaban);
-  lcd.setCursor(14, 0);
-  lcd.print("RH");
-  
-
-  lcd.setCursor(0, 1);
-  lcd.print("Suhu :");
-  lcd.setCursor(10, 1);
-  lcd.print(bmp.readTemperature());
-  lcd.setCursor(14, 1);
-  lcd.print("C");
-
-  delay(5000); //waktu tunda 5 detik
-  
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Pressure : ");
-  lcd.setCursor(10, 0);
+  lcd.setCursor(0, 2);
+  lcd.print("Tekanan  : ");
+  lcd.setCursor(10, 2);
   lcd.print(bmp.readPressure());
-  lcd.setCursor(14, 0);
+  lcd.setCursor(18, 2);
   lcd.print("Pa");
 
-  lcd.setCursor(0, 1);
-  lcd.print("Altitude:");
-  lcd.setCursor(10, 1);
+  
+  lcd.setCursor(0, 3);
+  lcd.print("Altitude :");
+  lcd.setCursor(10, 3);
   lcd.print(bmp.readAltitude(1013.25));
-  lcd.setCursor(14, 1);
-  lcd.print("m   ");
+  lcd.setCursor(18, 3);
+  lcd.print("m");
+
+
+
+  
+
+  
+
+  delay(5000); //waktu tunda 5 detik
+  
+
 
   delay(5000); //waktu tunda 5 detik
   String tgl_jam = String() + hari +":"+ bulan+":"+ tahun +"-"+jam+":"+menit+":"+detik;
